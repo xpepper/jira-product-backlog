@@ -65,10 +65,10 @@ class JiraBacklog
   end
   
   def report
-    puts "team\tpunti totali\tpunti raggiunti\tnumero storie da stimare"
-    puts "IPO \t #{total_of_all_for("IPO")} \t #{total_done_for("IPO")} \t #{not_jet_estimated_for("IPO")} "
-    puts "PRICES \t #{total_of_all_for("PRICES")} \t #{total_done_for("PRICES")} \t #{not_jet_estimated_for("PRICES")}"
-    puts "NEWS \t #{total_of_all_for("NEWS")} \t #{total_done_for("NEWS")} \t #{not_jet_estimated_for("NEWS")}"
+    puts "team\tpunti totali\tpunti raggiunti\tpunti rimanenti\tnumero storie da stimare"
+    puts "IPO \t #{total_of_all_for("IPO")} \t #{total_done_for("IPO")} \t #{total_of_all_for("IPO") - total_done_for("IPO")}\t #{not_jet_estimated_for("IPO")} "
+    puts "PRICES \t #{total_of_all_for("PRICES")} \t #{total_done_for("PRICES")} \t #{total_of_all_for("PRICES") - total_done_for("PRICES")}\t #{not_jet_estimated_for("PRICES")}"
+    puts "NEWS \t #{total_of_all_for("NEWS")} \t #{total_done_for("NEWS")} \t #{total_of_all_for("NEWS") - total_done_for("NEWS")}\t #{not_jet_estimated_for("NEWS")}"
   end
   
   protected
