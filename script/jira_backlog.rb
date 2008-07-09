@@ -36,17 +36,17 @@ class JiraBacklog
     collected.compact
   end
   
-  def not_jet_estimated_for(team)
-      not_jet_estimated = 0
-      all_story_of(team).each do |us|
-      not_jet_estimated += 1 unless us.estimated_complexity      
+  def not_yet_estimated_for(team)
+    not_yet_estimated = 0
+    all_story_of(team).each do |us|
+      not_yet_estimated += 1 unless us.estimated_complexity      
     end
-    not_jet_estimated
+    not_yet_estimated
   end
   
   def total_done_for(team)
     total = 0
-      all_story_of(team).each do |us|
+    all_story_of(team).each do |us|
       total += us.estimated_complexity if us.estimated_complexity   && us.status == "Closed"   
     end
     total
@@ -54,7 +54,7 @@ class JiraBacklog
 
   def total_of_all_for(team)
     total = 0
-      all_story_of(team).each do |us|
+    all_story_of(team).each do |us|
       total += us.estimated_complexity if us.estimated_complexity      
     end
     total
@@ -66,9 +66,9 @@ class JiraBacklog
   
   def report
     puts "team\tpunti totali\tpunti raggiunti\tpunti rimanenti\tnumero storie da stimare"
-    puts "IPO \t #{total_of_all_for("IPO")} \t #{total_done_for("IPO")} \t #{total_of_all_for("IPO") - total_done_for("IPO")}\t #{not_jet_estimated_for("IPO")} "
-    puts "PRICES \t #{total_of_all_for("PRICES")} \t #{total_done_for("PRICES")} \t #{total_of_all_for("PRICES") - total_done_for("PRICES")}\t #{not_jet_estimated_for("PRICES")}"
-    puts "NEWS \t #{total_of_all_for("NEWS")} \t #{total_done_for("NEWS")} \t #{total_of_all_for("NEWS") - total_done_for("NEWS")}\t #{not_jet_estimated_for("NEWS")}"
+    puts "IPO \t #{total_of_all_for("IPO")} \t #{total_done_for("IPO")} \t #{total_of_all_for("IPO") - total_done_for("IPO")}\t #{not_yet_estimated_for("IPO")} "
+    puts "PRICES \t #{total_of_all_for("PRICES")} \t #{total_done_for("PRICES")} \t #{total_of_all_for("PRICES") - total_done_for("PRICES")}\t #{not_yet_estimated_for("PRICES")}"
+    puts "NEWS \t #{total_of_all_for("NEWS")} \t #{total_done_for("NEWS")} \t #{total_of_all_for("NEWS") - total_done_for("NEWS")}\t #{not_yet_estimated_for("NEWS")}"
   end
   
   protected
@@ -97,20 +97,16 @@ class JiraBacklog
 end
 
 
-def produce_report
-  
-  def login
-    system "curl -s -c cookies.txt -d os_username=#{USERNAME} -d os_password=#{PASSWORD} -o /dev/null http://jira.ea.borsaitaliana.it/login.jsp"
-  end
-  
-  def get_all_stories 
-    url ="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?&type=6&pid=10001&component=10001&component=10002&component=10007&sorter/field=issuekey&sorter/order=DESC&tempMax=1000"
-   # url="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
-    system "curl -b cookies.txt -o all_stories.xml \"#{url}\""
-  end
-  
-  login
-  get_all_stories
-  backlog = JiraBacklog.new("all_stories.xml")
-  puts backlog.report
+
+
+def login
+  system "curl -s -c cookies.txt -d os_username=#{USERNAME} -d os_password=#{PASSWORD} -o /dev/null http://jira.ea.borsaitaliana.it/login.jsp"
 end
+
+def get_all_stories 
+  url ="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?&type=6&pid=10001&component=10001&component=10002&component=10007&sorter/field=issuekey&sorter/order=DESC&tempMax=1000"
+ # url="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
+  system "curl -b cookies.txt -o all_stories.xml \"#{url}\""
+end
+
+
