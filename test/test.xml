@@ -106,10 +106,23 @@
 
     <subtasks>
         </subtasks>
+           <customfields>
+                                    <customfield id="customfield_10001" key="com.atlassian.jira.ext.charting:firstresponsedate">
+                    <customfieldname>Date of First Response</customfieldname>
+                    <customfieldvalues>
+                        <customfieldvalue>Fri, 20 Jun 2008 15:48:12 +0200 (CEST)</customfieldvalue>
 
-            <customfields>
-                                                                                            </customfields>
+                    </customfieldvalues>
+                </customfield>
+                                                <customfield id="customfield_10010" key="com.atlassian.jira.plugin.system.customfieldtypes:float">
+                    <customfieldname>Estimated Complexity</customfieldname>
+                    <customfieldvalues>
+                        <customfieldvalue>47.0</customfieldvalue>
+                    </customfieldvalues>
+                </customfield>
+                                                                </customfields>
     
+
 </item>
 
 <item>
@@ -123,7 +136,7 @@
         <type id="6" iconUrl="http://localhost:8070/images/icons/sales.gif">User story</type>
     
             <priority id="3" iconUrl="http://localhost:8070/images/icons/priority_major.gif">Major</priority>    
-        <status id="1" iconUrl="http://localhost:8070/images/icons/status_open.gif">Open</status>
+        <status id="1" iconUrl="http://localhost:8070/images/icons/status_open.gif">Closed</status>
                         <resolution id="-1">Unresolved</resolution>
             
     
@@ -151,7 +164,20 @@
     <subtasks>
         </subtasks>
 
-            <customfields>
+           <customfields>
+                                    <customfield id="customfield_10001" key="com.atlassian.jira.ext.charting:firstresponsedate">
+                    <customfieldname>Date of First Response</customfieldname>
+                    <customfieldvalues>
+                        <customfieldvalue>Fri, 20 Jun 2008 15:48:12 +0200 (CEST)</customfieldvalue>
+
+                    </customfieldvalues>
+                </customfield>
+                                                <customfield id="customfield_10010" key="com.atlassian.jira.plugin.system.customfieldtypes:float">
+                    <customfieldname>Estimated Complexity</customfieldname>
+                    <customfieldvalues>
+                        <customfieldvalue>12.0</customfieldvalue>
+                    </customfieldvalues>
+                </customfield>
                                                                                             </customfields>
     
 </item>
