@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require "test/unit"
 require File.dirname(__FILE__) + '/../script/jira_backlog'
 
@@ -20,13 +22,13 @@ class JiraBacklogTest < Test::Unit::TestCase
     assert_equal 18, @@backlog.stories.size
     assert_equal 5,  @@backlog.all_story_of("PRICES") .size
     
-    assert_equal 3, @@backlog.not_jet_estimated_for("PRICES")
+    assert_equal 3, @@backlog.not_yet_estimated_for("PRICES")
     assert_equal 12, @@backlog.total_done_for("PRICES")
     assert_equal 47 + 12, @@backlog.total_of_all_for("PRICES")
 
     
     assert_equal 10,  @@backlog.all_story_of("IPO") .size
-    assert_equal 9, @@backlog.not_jet_estimated_for("IPO")
+    assert_equal 9, @@backlog.not_yet_estimated_for("IPO")
     assert_equal 10, @@backlog.total_of_all_for("IPO")
    
     assert_equal 3,  @@backlog.all_story_of("NEWS") .size
