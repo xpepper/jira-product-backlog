@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
 require "test/unit"
-require File.dirname(__FILE__) + '/../script/jira_backlog'
+require File.dirname(__FILE__) + '/../lib/jira_backlog'
+
 
 class JiraBacklogTest < Test::Unit::TestCase
-  @@backlog = JiraBacklog.new("test/test.xml")
+  @@backlog = JiraBacklog.new(File.join(File.dirname(__FILE__), "test.xml"))
 
   def test_ker_227
     story = @@backlog["KER-227"]
@@ -15,6 +16,10 @@ class JiraBacklogTest < Test::Unit::TestCase
     assert_equal 10, story.estimated_complexity
     assert_equal Fixnum, story.estimated_complexity.class
     assert_equal "IPO", story.team
+  end
+  
+  def test_report_format
+    assert_equal "team\tpunti totali\tpunti raggiunti\tpunti rimanenti\tnumero storie da stimare\nIPO \t 10 \t 0 \t 10\t 9 \nPRICES \t 59 \t 12 \t 47\t 3\nNEWS \t 0 \t 0 \t 0\t 3\n", @@backlog.report
   end
 
   
