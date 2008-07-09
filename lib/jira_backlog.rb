@@ -106,8 +106,7 @@ def login
 end
 
 def get_all_stories 
-  url ="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?&type=6&pid=10001&component=10001&component=10002&component=10007&sorter/field=issuekey&sorter/order=DESC&tempMax=1000"
- # url="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
+  url="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
   system "curl -b cookies.txt -o all_stories.xml \"#{url}\""
 end
 
