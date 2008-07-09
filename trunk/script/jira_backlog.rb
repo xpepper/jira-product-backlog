@@ -65,10 +65,10 @@ class JiraBacklog
   end
   
   def report
-    puts "team, punti totali, punti raggiunti, numero storie da stimare"
-    puts "IPO,  #{total_of_all_for("IPO")}, #{total_done_for("IPO")}, #{not_jet_estimated_for("IPO")} "
-    puts "PRICES, #{total_of_all_for("PRICES")}, #{total_done_for("PRICES")}, #{not_jet_estimated_for("PRICES")}"
-    puts "NEWS, #{total_of_all_for("NEWS")}, #{total_done_for("NEWS")}, #{not_jet_estimated_for("NEWS")}"
+    puts "team\tpunti totali\tpunti raggiunti\tnumero storie da stimare"
+    puts "IPO \t #{total_of_all_for("IPO")} \t #{total_done_for("IPO")} \t #{not_jet_estimated_for("IPO")} "
+    puts "PRICES \t #{total_of_all_for("PRICES")} \t #{total_done_for("PRICES")} \t #{not_jet_estimated_for("PRICES")}"
+    puts "NEWS \t #{total_of_all_for("NEWS")} \t #{total_done_for("NEWS")} \t #{not_jet_estimated_for("NEWS")}"
   end
   
   protected
@@ -97,8 +97,6 @@ class JiraBacklog
 end
 
 
-
-
 def produce_report
   
   def login
@@ -106,8 +104,9 @@ def produce_report
   end
   
   def get_all_stories 
-    url="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
-    system "curl -b cookies.txt -o all_stories.xml #{url}"
+    url ="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml?&type=6&pid=10001&component=10001&component=10002&component=10007&sorter/field=issuekey&sorter/order=DESC&tempMax=1000"
+   # url="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
+    system "curl -b cookies.txt -o all_stories.xml \"#{url}\""
   end
   
   login
