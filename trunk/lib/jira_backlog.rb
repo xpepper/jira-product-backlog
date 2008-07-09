@@ -9,9 +9,10 @@ PASSWORD="mvaccari"
 UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date)
 
 class JiraBacklog
-  def initialize(all_stories_filename)
-    xml = REXML::Document.new(File.open(all_stories_filename))
+  def initialize(all_stories_filename=nil)
     @stories = {}
+    return unless all_stories_filename
+    xml = REXML::Document.new(File.open(all_stories_filename))
     xml.elements.each("//item") do |el|
       key = subelement(el, "key")
       status = subelement(el, "status")
@@ -23,6 +24,10 @@ class JiraBacklog
   
   def number_of_stories
     @stories.keys.size
+  end
+  
+  def number_of_stories_for(team)
+    all_story_of(team).size
   end
   
   def stories
@@ -37,17 +42,13 @@ class JiraBacklog
   end
   
   def not_yet_estimated_for(team)
-    not_yet_estimated = 0
-    all_story_of(team).each do |us|
-      not_yet_estimated += 1 unless us.estimated_complexity 
-    end
-    not_yet_estimated
+    all_story_of(team).find_all {|story| story.estimated_complexity.nil?}.size
   end
   
   def total_done_for(team)
     total = 0
     all_story_of(team).each do |us|
-      total += us.estimated_complexity if us.estimated_complexity   && us.status == "Closed"   
+      total += us.estimated_complexity if us.estimated_complexity && us.status == "Closed"   
     end
     total
   end
@@ -64,16 +65,11 @@ class JiraBacklog
     @stories[key]
   end
   
-  def report
-    return <<-EOS
-team\tpunti totali\tpunti raggiunti\tpunti rimanenti\tnumero storie da stimare
-IPO \t #{total_of_all_for("IPO")} \t #{total_done_for("IPO")} \t #{total_of_all_for("IPO") - total_done_for("IPO")}\t #{not_yet_estimated_for("IPO")} 
-PRICES \t #{total_of_all_for("PRICES")} \t #{total_done_for("PRICES")} \t #{total_of_all_for("PRICES") - total_done_for("PRICES")}\t #{not_yet_estimated_for("PRICES")}
-NEWS \t #{total_of_all_for("NEWS")} \t #{total_done_for("NEWS")} \t #{total_of_all_for("NEWS") - total_done_for("NEWS")}\t #{not_yet_estimated_for("NEWS")}
-    EOS
+  def []=(key, value)
+    @stories[key] = value
   end
   
-  protected
+protected
   
   def subelement(el, path)
     sub = el.elements[path]
@@ -97,9 +93,6 @@ NEWS \t #{total_of_all_for("NEWS")} \t #{total_done_for("NEWS")} \t #{total_of_a
     DateTime.parse(s).strftime("%Y-%m-%d")
   end
 end
-
-
-
 
 def login
   system "curl -s -c cookies.txt -d os_username=#{USERNAME} -d os_password=#{PASSWORD} -o /dev/null http://jira.ea.borsaitaliana.it/login.jsp"

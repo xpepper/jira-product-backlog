@@ -17,12 +17,7 @@ class JiraBacklogTest < Test::Unit::TestCase
     assert_equal Fixnum, story.estimated_complexity.class
     assert_equal "IPO", story.team
   end
-  
-  def test_report_format
-    assert_equal "team\tpunti totali\tpunti raggiunti\tpunti rimanenti\tnumero storie da stimare\nIPO \t 10 \t 0 \t 10\t 9 \nPRICES \t 59 \t 12 \t 47\t 3\nNEWS \t 0 \t 0 \t 0\t 3\n", @@backlog.report
-  end
-
-  
+    
   def test_story_count_totals
     assert_equal 18, @@backlog.stories.size
     assert_equal 5,  @@backlog.all_story_of("PRICES") .size
@@ -39,10 +34,6 @@ class JiraBacklogTest < Test::Unit::TestCase
     assert_equal 3,  @@backlog.all_story_of("NEWS") .size
   end
   
-  def test_report
-    puts @@backlog.report
-  end
-
   def test_null_complexity
     story = @@backlog["KER-209"]
     assert_nil story.estimated_complexity
@@ -51,6 +42,10 @@ class JiraBacklogTest < Test::Unit::TestCase
   def test_resolution_date
     story = @@backlog["KER-209"]
     assert_equal "2008-06-18", story.resolution_date
+  end
+
+  def test_number_of_stories_for
+    assert_equal 10, @@backlog.number_of_stories_for("IPO")
   end
 
 end
