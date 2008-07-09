@@ -39,7 +39,7 @@ class JiraBacklog
   def not_yet_estimated_for(team)
     not_yet_estimated = 0
     all_story_of(team).each do |us|
-      not_yet_estimated += 1 unless us.estimated_complexity      
+      not_yet_estimated += 1 unless us.estimated_complexity 
     end
     not_yet_estimated
   end
