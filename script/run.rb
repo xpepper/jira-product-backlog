@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require './script/jira_backlog.rb'
+require File.join(File.dirname(__FILE__), *%w[.. lib jira_backlog.rb])
 
 login
 get_all_stories
