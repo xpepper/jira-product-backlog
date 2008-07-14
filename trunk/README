@@ -1,3 +1,6 @@
-$ ruby script/run.rb
+
 DIPENDENZE: 
 curl -- `sudo apt-get install curl` su ubuntu
+ruby
+
+$ ruby script/run.rb
