@@ -6,7 +6,11 @@ require 'date'
 USERNAME="mvaccari"
 PASSWORD="mvaccari"
 
-UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date)
+UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date) do
+  def not_closed
+    status != "Closed" && status != "Resolved"
+  end
+end
 
 class JiraBacklog
   def initialize(all_stories_filename=nil)
@@ -42,7 +46,7 @@ class JiraBacklog
   end
   
   def not_yet_estimated_for(team)
-    all_story_of(team).find_all {|story| story.estimated_complexity.nil?}.size
+    all_story_of(team).find_all {|story| story.estimated_complexity.nil? && story.not_closed }.size
   end
   
   def total_done_for(team)

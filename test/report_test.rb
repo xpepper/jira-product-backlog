@@ -13,6 +13,7 @@ class ReportTest < Test::Unit::TestCase
     @backlog["KER-004"] = UserStory.new("KER-004", "Open", 22, "PRICE")
     @backlog["KER-005"] = UserStory.new("KER-005", "Open", nil, "IPO")
     @backlog["KER-006"] = UserStory.new("KER-006", "Open", nil, "PRICE")
+    @backlog["KER-007"] = UserStory.new("KER-007", "Closed", nil, "PRICE")
   end
   
   def test_total_points
@@ -27,6 +28,6 @@ class ReportTest < Test::Unit::TestCase
   def test_report_row
     report = Report.new(@backlog)
     assert_equal "IPO\t25\t\t32\t7\t4\t1", report.row_for("IPO")
-    assert_equal "PRICE\t22\t\t22\t0\t2\t1", report.row_for("PRICE")
+    assert_equal "PRICE\t22\t\t22\t0\t3\t1", report.row_for("PRICE")
   end
 end
