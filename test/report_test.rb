@@ -22,12 +22,12 @@ class ReportTest < Test::Unit::TestCase
   
   def test_report_header
     report = Report.new
-    assert_equal "Points remaining\tProjection\tTotal points\tPoints earned\tNumber of stories\tNon-estimated stories", report.header
+    assert_equal "Team\tRemain\tProject\tTotal\tEarned\t#stories\tNon-estimated stories", report.header
   end
   
   def test_report_row
     report = Report.new(@backlog)
-    assert_equal "IPO\t25\t\t32\t7\t4\t1", report.row_for("IPO")
-    assert_equal "PRICE\t22\t\t22\t0\t3\t1", report.row_for("PRICE")
+    assert_equal "IPO\t25\tn.a.\t32\t7\t4\t1", report.row_for("IPO")
+    assert_equal "PRICE\t22\tn.a.\t22\t0\t3\t1", report.row_for("PRICE")
   end
 end
