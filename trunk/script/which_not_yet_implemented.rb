@@ -2,7 +2,7 @@
 require File.join(File.dirname(__FILE__), *%w[.. lib jira_backlog.rb])
 
 unless ARGV[0] 
-  puts "Please call me with one among IPO - PRICES - NEWS "
+  puts "Please call me with one among DOCUMENTS - PRICES - NEWS - SOSE"
   exit
 end
 

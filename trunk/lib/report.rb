@@ -10,11 +10,11 @@ class Report
     total_points = @backlog.total_of_all_for(team)
     points_earned = @backlog.total_done_for(team)
     points_remaining = total_points - points_earned
-    [team, points_remaining, "", total_points, points_earned, all_stories, not_estimated].join("\t")
+    [team, points_remaining, "n.a.", total_points, points_earned, all_stories, not_estimated].join("\t")
   end
   
   def header
-    "Points remaining\tProjection\tTotal points\tPoints earned\tNumber of stories\tNon-estimated stories"
+    "Team\tRemain\tProject\tTotal\tEarned\t#stories\tNon-estimated stories"
   end
   
   def report(*teams)
