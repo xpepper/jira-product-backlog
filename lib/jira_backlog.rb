@@ -5,6 +5,7 @@ require 'date'
 
 USERNAME="mvaccari"
 PASSWORD="mvaccari"
+JIRA_HOME_URL="jira.dev.borsaitaliana.it"
 
 UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date) do
   def not_closed
@@ -99,11 +100,11 @@ protected
 end
 
 def login
-  system "curl -s -c cookies.txt -d os_username=#{USERNAME} -d os_password=#{PASSWORD} -o /dev/null http://jira.ea.borsaitaliana.it/login.jsp"
+  system "curl -s -c cookies.txt -d os_username=#{USERNAME} -d os_password=#{PASSWORD} -o /dev/null #{JIRA_HOME_URL}/login.jsp"
 end
 
 def get_all_stories 
-  url="http://jira.ea.borsaitaliana.it/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
+  url="#{JIRA_HOME_URL}/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
   system "curl -b cookies.txt -o all_stories.xml \"#{url}\""
 end
 
