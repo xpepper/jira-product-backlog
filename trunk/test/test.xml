@@ -136,7 +136,7 @@
         <type id="6" iconUrl="http://localhost:8070/images/icons/sales.gif">User story</type>
     
             <priority id="3" iconUrl="http://localhost:8070/images/icons/priority_major.gif">Major</priority>    
-        <status id="1" iconUrl="http://localhost:8070/images/icons/status_open.gif">Closed</status>
+         <status id="10004" iconUrl="http://localhost:8070/images/icons/status_down.gif">Internal Signoff</status>
                         <resolution id="-1">Unresolved</resolution>
             
     
@@ -809,7 +809,7 @@
         <type id="6" iconUrl="http://localhost:8070/images/icons/sales.gif">User story</type>
     
             <priority id="3" iconUrl="http://localhost:8070/images/icons/priority_major.gif">Major</priority>    
-        <status id="6" iconUrl="http://localhost:8070/images/icons/status_closed.gif">Closed</status>
+        <status id="10004" iconUrl="http://localhost:8070/images/icons/status_down.gif">Internal Signoff</status>
                         <resolution id="2">Won&apos;t Fix</resolution>
             
     

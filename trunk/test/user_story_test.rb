@@ -7,6 +7,7 @@ class TestUserStory < Test::Unit::TestCase
     assert_not_closed "Open"
     assert_not_closed "In Progress"
     assert_closed "Closed"
+    assert_closed "Internal Signoff"
     assert_closed "Resolved"
   end
   

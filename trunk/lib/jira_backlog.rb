@@ -9,7 +9,7 @@ JIRA_HOME_URL="jira.dev.borsaitaliana.it"
 
 UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date) do
   def not_closed
-    status != "Closed" && status != "Resolved"
+    status != "Internal Signoff" && status != "Closed" && status != "Resolved"
   end
 end
 
@@ -53,7 +53,7 @@ class JiraBacklog
   def total_done_for(team)
     total = 0
     all_story_of(team).each do |us|
-      total += us.estimated_complexity if us.estimated_complexity && us.status == "Closed"   
+      total += us.estimated_complexity if us.estimated_complexity && us.status == "Internal Signoff"   
     end
     total
   end
