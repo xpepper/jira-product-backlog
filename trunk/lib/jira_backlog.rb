@@ -3,13 +3,13 @@
 require 'rexml/document' 
 require 'date' 
 
+JIRA_HOME_URL="jira.dev.borsaitaliana.it"
 USERNAME="mvaccari"
 PASSWORD="mvaccari"
-JIRA_HOME_URL="jira.dev.borsaitaliana.it"
 
 UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date) do
-  def not_closed
-    status != "Internal Signoff" && status != "Closed" && status != "Resolved"
+  def closed
+    ["Internal Signoff", "Closed", "Resolved"].include?(status)
   end
 end
 
@@ -47,15 +47,19 @@ class JiraBacklog
   end
   
   def not_yet_estimated_for(team)
-    all_story_of(team).find_all {|story| story.estimated_complexity.nil? && story.not_closed }.size
+    all_story_of(team).find_all {|story| story.estimated_complexity.nil? && !story.closed }.size
+  end
+
+  def in_status_for(aStatus, team)
+    total = 0
+    all_story_of(team).each do |us|
+      total += us.estimated_complexity if us.estimated_complexity && us.status == aStatus   
+    end
+    total
   end
   
   def total_done_for(team)
-    total = 0
-    all_story_of(team).each do |us|
-      total += us.estimated_complexity if us.estimated_complexity && us.status == "Internal Signoff"   
-    end
-    total
+    in_status_for("Internal Signoff", team)   
   end
 
   def total_of_all_for(team)
