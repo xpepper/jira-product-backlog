@@ -32,6 +32,9 @@ class JiraBacklogTest < Test::Unit::TestCase
     assert_equal 10, @@backlog.total_of_all_for("IPO")
    
     assert_equal 3,  @@backlog.all_story_of("NEWS") .size
+    
+    assert_equal 0,  @@backlog.in_status_for("Internal Signoff", "NEWS")
+    assert_equal 12,  @@backlog.in_status_for("Internal Signoff", "PRICES")
   end
   
   def test_null_complexity
