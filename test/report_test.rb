@@ -13,21 +13,24 @@ class ReportTest < Test::Unit::TestCase
     @backlog["KER-004"] = UserStory.new("KER-004", "Waiting", 22, "PRICE")
     @backlog["KER-005"] = UserStory.new("KER-005", "Waiting", nil, "IPO")
     @backlog["KER-006"] = UserStory.new("KER-006", "Waiting", nil, "PRICE")
-    @backlog["KER-007"] = UserStory.new("KER-007", "Internal Signoff", nil, "PRICE")
+    @backlog["KER-007"] = UserStory.new("KER-007", "Internal Signoff", 5, "PRICE")
+    @backlog["KER-008"] = UserStory.new("KER-008", "Closed", 8, "PRICE")
+    @backlog["KER-009"] = UserStory.new("KER-009", "Out of Scope", 10, "PRICE")    
   end
   
   def test_total_points
     assert_equal 32, @backlog.total_of_all_for("IPO")
+    assert_equal 35, @backlog.total_of_all_for("PRICE")    
   end
   
   def test_report_header
     report = Report.new
-    assert_equal "Team\tRemain\tTotal\tEarned\t#U.S.\tNon-estimated stories", report.header
+    assert_equal "Team\tRemain\tTotal\tEarned\t#U.S.\tNonEst.\tOutOfScope", report.header
   end
   
   def test_report_row
     report = Report.new(@backlog)
-    assert_equal "IPO\t25\t32\t7\t4\t1", report.row_for("IPO")
-    assert_equal "PRICE\t22\t22\t0\t3\t1", report.row_for("PRICE")
+    assert_equal "IPO\t25\t32\t7\t4\t1\t0", report.row_for("IPO")
+    assert_equal "PRICE\t22\t35\t13\t5\t1\t10", report.row_for("PRICE")
   end
 end

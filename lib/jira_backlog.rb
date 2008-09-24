@@ -50,6 +50,14 @@ class JiraBacklog
     all_story_of(team).find_all {|story| story.estimated_complexity.nil? && !story.closed }.size
   end
 
+  def total_out_of_scope_for(team)
+    total = 0
+    all_story_of(team).each do |us|
+      total += us.estimated_complexity if us.estimated_complexity && us.status == "Out of Scope"     
+    end
+    total
+  end
+  
   def in_status_for(aStatus, team)
     total = 0
     all_story_of(team).each do |us|
@@ -59,13 +67,13 @@ class JiraBacklog
   end
   
   def total_done_for(team)
-    in_status_for("Internal Signoff", team)   
+    in_status_for("Internal Signoff", team) + in_status_for("Closed", team)  
   end
 
   def total_of_all_for(team)
     total = 0
     all_story_of(team).each do |us|
-      total += us.estimated_complexity if us.estimated_complexity      
+      total += us.estimated_complexity if us.estimated_complexity && us.status != "Out of Scope"     
     end
     total
   end
