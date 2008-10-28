@@ -9,7 +9,7 @@ PASSWORD="mvaccari"
 
 UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date) do
   def closed
-    ["Internal Signoff", "Closed", "Resolved"].include?(status)
+    ["Internal Signoff", "Closed", "Resolved", "Out of Scope"].include?(status)
   end
 end
 
@@ -47,7 +47,7 @@ class JiraBacklog
   end
   
   def not_yet_estimated_for(team)
-    all_story_of(team).find_all {|story| story.estimated_complexity.nil? && !story.closed }.size
+    all_story_of(team).find_all {|story| story.estimated_complexity.nil? && !story.closed}.size
   end
 
   def total_out_of_scope_for(team)
