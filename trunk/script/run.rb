@@ -5,4 +5,4 @@ require File.join(File.dirname(__FILE__), *%w[.. lib report.rb])
 login
 get_all_stories
 report = Report.new(JiraBacklog.new("all_stories.xml"))
-puts report.report("PRICES", "NEWS", "DOCUMENTS", "SOSE", "COMMON")
+puts report.report("PRICES", "NEWS", "DOCUMENTS", "SOSE", "COMMON", "DATA-MIGRATION")
