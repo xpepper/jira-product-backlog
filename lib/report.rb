@@ -7,15 +7,17 @@ class Report
   def row_for(team)
     all_stories = @backlog.number_of_stories_for(team)
     not_estimated = @backlog.not_yet_estimated_for(team)
+    
     total_points = @backlog.total_of_all_for(team)
     points_earned = @backlog.total_done_for(team)
-    out_of_scope = @backlog.total_out_of_scope_for(team)
     points_remaining = total_points - points_earned
-    [team.slice(0,7), points_remaining, total_points, points_earned, all_stories, not_estimated, out_of_scope].join("\t")
+    
+    [team.slice(0,7), points_remaining, total_points, points_earned, all_stories, not_estimated].join("\t")
   end
   
   def header
-    "Team\tRemain\tTotal\tEarned\t#U.S.\tNonEst.\tOutOfScope"
+    "--------------------------------------------------\n" +
+    "Team\tRemain\tTotal\tEarned\t#U.S.\tNotYetEstimated"
   end
   
   def report(*teams)

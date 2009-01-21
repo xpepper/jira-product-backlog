@@ -3,13 +3,13 @@
 require 'rexml/document' 
 require 'date' 
 
-JIRA_HOME_URL="jira.dev.borsaitaliana.it"
-USERNAME="mvaccari"
-PASSWORD="mvaccari"
+JIRA_HOME_URL="dev.sourcesense.com/jira"
+USERNAME="p.dibello"
+PASSWORD="namu1253"
 
-UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title, :resolution_date) do
+UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title) do
   def closed
-    ["Internal Signoff", "Closed", "Resolved", "Out of Scope"].include?(status)
+    ["Closed"].include?(status)
   end
 end
 
@@ -23,7 +23,7 @@ class JiraBacklog
       status = subelement(el, "status")
       team = subelement(el, "component")
       title = subelement(el, "title")
-      @stories[key] = UserStory.new(key, status, estimated_complexity(el), team, title, resolution_date(el))
+      @stories[key] = UserStory.new(key, status, estimated_complexity(el), team, title)
     end
   end
   
@@ -49,14 +49,6 @@ class JiraBacklog
   def not_yet_estimated_for(team)
     all_story_of(team).find_all {|story| story.estimated_complexity.nil? && !story.closed}.size
   end
-
-  def total_out_of_scope_for(team)
-    total = 0
-    all_story_of(team).each do |us|
-      total += us.estimated_complexity if us.estimated_complexity && us.status == "Out of Scope"     
-    end
-    total
-  end
   
   def in_status_for(aStatus, team)
     total = 0
@@ -67,13 +59,13 @@ class JiraBacklog
   end
   
   def total_done_for(team)
-    in_status_for("Internal Signoff", team) + in_status_for("Closed", team)  
+    in_status_for("Closed", team)  
   end
 
   def total_of_all_for(team)
     total = 0
     all_story_of(team).each do |us|
-      total += us.estimated_complexity if us.estimated_complexity && us.status != "Out of Scope"     
+      total += us.estimated_complexity if us.estimated_complexity     
     end
     total
   end
@@ -100,24 +92,19 @@ protected
   end
   
   def estimated_complexity(el)
-    v = custom_field(el, 'customfield_10010')
+    v = custom_field(el, 'customfield_10030')
     v.to_i if v
   end
   
-  def resolution_date(el)
-    s = custom_field el, 'customfield_10000'
-    return nil unless s
-    DateTime.parse(s).strftime("%Y-%m-%d")
-  end
 end
 
 def login
-  system "curl -s -c cookies.txt -d os_username=#{USERNAME} -d os_password=#{PASSWORD} -o /dev/null #{JIRA_HOME_URL}/login.jsp"
+  system "curl -k -s -c cookies.txt -d os_username=#{USERNAME} -d os_password=#{PASSWORD} -o /dev/null https://#{JIRA_HOME_URL}/login.jsp"
 end
 
 def get_all_stories 
-  url="#{JIRA_HOME_URL}/sr/jira.issueviews:searchrequest-xml/10031/SearchRequest-10031.xml?tempMax=1000"
-  system "curl -b cookies.txt -o all_stories.xml \"#{url}\""
+  url="https://#{JIRA_HOME_URL}/sr/jira.issueviews:searchrequest-xml/10020/SearchRequest-10020.xml?tempMax=1000"
+  system "curl -k -b cookies.txt -o all_stories.xml \"#{url}\""
 end
 
 
