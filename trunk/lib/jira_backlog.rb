@@ -4,8 +4,8 @@ require 'rexml/document'
 require 'date' 
 
 JIRA_HOME_URL="dev.sourcesense.com/jira"
-USERNAME="p.dibello"
-PASSWORD="namu1253"
+USERNAME="FILL.WITH.YOUR.USERNAME"
+PASSWORD="FILL.WITH.YOUR.PASSWORD"
 
 UserStory = Struct.new(:key, :status, :estimated_complexity, :team, :title) do
   def closed
