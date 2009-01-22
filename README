@@ -1,3 +1,7 @@
+Valorizza username e password di jira in lib/jira_backlog.rb
+
+USERNAME="FILL.WITH.YOUR.USERNAME"
+PASSWORD="FILL.WITH.YOUR.PASSWORD"
 
 DIPENDENZE: 
 curl -- `sudo apt-get install curl` su ubuntu
