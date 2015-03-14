@@ -1,0 +1,1 @@
+This simple ruby script produces a report of every user stories on Jira.
